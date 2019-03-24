@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<style>
+
+</style>
+
+<body>
+
+</body>
+<script>
+    // 深度克隆 对象
+    var obj = {
+        name: 'abd',
+        age: 123,
+        card: ['vise', 'master'],
+        wife: {
+            name: 'bbc',
+            son: {
+                name: 'aaa'
+            }
+        }
+    }
+    var obj1 = {}
+    // deepClone(obj,obj1);
+    // console.log(obj1)
+    function deepClone(origin, target) {
+        var target = target || {},
+            toStr = Object.prototype.toString, // 查看是对象还是数组的方法
+            arrStr = "[object Array]";
+        for(var prop in origin){
+            if(origin.hasOwnProperty(prop)) { // 当要克隆的值不是该对象原型上的值得时候执行下面操作
+                if(origin[prop] !== "null" && typeof(origin[prop]) == 'object'){ // 当该对象的键值在typeof中显示的是对象是执行下面操作
+                    if(toStr.call(origin[prop]) == arrStr){// 当该对象的键值是数组时 
+                        target[prop] = [];
+                    }else{ // 当该对象的键值是对象的时候，这边忽略掉了null
+                        target[prop] = {};
+                    }
+                    deepClone(origin[prop], target[prop]); // 递归
+                }else { // 该对象的值是原始值得话，直接赋值，
+                    target[prop] = origin[prop];
+                }
+            }
+        }
+        return target;
+    }
+</script>
+
+</html>
