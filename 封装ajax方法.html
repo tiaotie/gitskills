@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        function get(url, callback) {
+            var xhr = new XMLHTTPRequest()
+            // 当请求加载成功之后要调用指定的函数
+            xhr.onload = function () {
+                // 我现在需要得到这里的 xhr.responseText
+                callback(xhr.responseText)
+            }
+            xhr.open('get', 'url', true)
+            xhr.send()
+        }
+
+        get('dsadas', function (data) {
+
+        })
+    </script>
+</body>
+
+</html>
