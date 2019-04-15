@@ -11,19 +11,37 @@
 <body>
     <script>
         function get(url, callback) {
-            var xhr = new XMLHTTPRequest()
-            // 当请求加载成功之后要调用指定的函数
-            xhr.onload = function () {
-                // 我现在需要得到这里的 xhr.responseText
-                callback(xhr.responseText)
-            }
-            xhr.open('get', 'url', true)
-            xhr.send()
+            return new Promise(function (resolve, reject) {
+                var oReq = new XMLHttpRequest()
+                // 当请求加载成功之后要调用指定的函数
+                oReq.onload = function () {
+                    // 我现在需要得到这里的 xhr.responseText
+                    callback && callback(JSON.parse(oReq.responseText))
+                    resolve(JSON.parse(oReq.responseText))
+                }
+                oReq.onerror = function (err) {
+                    reject(err)
+                }
+                oReq.open('get', url, true)
+                oReq.send()
+            })
         }
 
         get('dsadas', function (data) {
 
         })
+
+        get('dafsdf')
+            .then(function (data) {
+                // 下面的请求返回123
+                return get('dsfafsd') 
+            }),function (err) {
+                console.log(err)
+            }
+            .then(function (data) {
+                // 当前data 就是上面请求返回的值   123
+                console.log(data)
+            })
     </script>
 </body>
 
